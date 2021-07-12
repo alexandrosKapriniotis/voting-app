@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -42,17 +44,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return HasMany
+     */
     public function ideas(): HasMany
     {
         return $this->hasMany(Idea::class);
     }
 
     /**
-     * @return BelongsToMany
+     * @return hasMany
      */
-    public function votes(): BelongsToMany
+    public function votes(): hasMany
     {
-        return $this->belongsToMany(Idea::class,'votes');
+        return $this->hasMany(Idea::class,'votes');
     }
 
     public function getAvatar()

@@ -99,5 +99,5 @@ class IdeaTest extends TestCase
         $idea->removeVote($user);
         $this->assertFalse($idea->isVotedByUser($user));
     }
-    
+
 }
