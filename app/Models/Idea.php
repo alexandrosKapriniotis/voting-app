@@ -77,6 +77,10 @@ class Idea extends Model
 
     public function vote(User $user)
     {
+        if ($this->isVotedByUser($user)) {
+            return;
+        }
+
         Vote::create([
             'idea_id' => $this->id,
             'user_id' => $user->id
@@ -87,7 +91,6 @@ class Idea extends Model
     {
         Vote::where('idea_id',$this->id)
             ->where('user_id',$user->id)
-            ->first()
             ->delete();
     }
 }
