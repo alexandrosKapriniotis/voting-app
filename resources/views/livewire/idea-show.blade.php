@@ -182,7 +182,7 @@
                             <div>
                                 <label class="inline-flex items-center">
                                     <input class="form-radio" type="radio" name="radio-direct" value="2">
-                                    <span class="ml-2">In progress</span>
+                                    <span class="ml-2">In Progress</span>
                                 </label>
                             </div>
                             <div>

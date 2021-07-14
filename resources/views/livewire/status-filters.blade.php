@@ -14,8 +14,8 @@
             </a>
         </li>
 
-        <li wire:click.prevent="setStatus('In progress')">
-            <a href="#" class="pb-3 text-gray-400 transition duration-150 ease-in border-b-4 hover:border-blue @if($status === 'In progress') border-blue text-gray-900 @endif">
+        <li wire:click.prevent="setStatus('In Progress')">
+            <a href="#" class="pb-3 text-gray-400 transition duration-150 ease-in border-b-4 hover:border-blue @if($status === 'In Progress') border-blue text-gray-900 @endif">
                 In progress ({{ $statusCount['in_progress'] }})
             </a>
         </li>
@@ -24,7 +24,7 @@
 
     <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
         <li wire:click.prevent="setStatus('Implemented')">
-            <a href="#" class="border-b-4 pb-3 @if($status === 'Implemented') border-blue text-gray-900 @endif">
+            <a href="#" class="pb-3 text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue @if($status === 'Implemented') border-blue text-gray-900 @endif">
                 Implemented ({{ $statusCount['implemented'] }})
             </a>
         </li>
