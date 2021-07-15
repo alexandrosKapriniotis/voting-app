@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\QueryFilters\ideasFilter;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Pipeline\Pipeline;
 
 class Idea extends Model
 {
@@ -94,5 +96,11 @@ class Idea extends Model
         Vote::where('idea_id',$this->id)
             ->where('user_id',$user->id)
             ->delete();
+    }
+
+    public function scopeFilter($query){
+        return app(Pipeline::class)->send($query)->through([
+            IdeasFilter::class
+        ])->thenReturn();
     }
 }

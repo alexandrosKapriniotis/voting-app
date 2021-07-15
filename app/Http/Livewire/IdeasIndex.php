@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
 use App\Models\Vote;
+use App\QueryFilters\ideasFilter;
+use Illuminate\Pipeline\Pipeline;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,10 +17,12 @@ class IdeasIndex extends Component
 
     public $status = 'All';
     public $category;
+    public $ideas_filter;
 
     protected $queryString = [
         'status'    => ['except' => ''],
-        'category'
+        'category',
+        'ideas_filter'
     ];
 
     protected $listeners = [
@@ -35,6 +39,21 @@ class IdeasIndex extends Component
         $this->resetPage();
     }
 
+    public function updatingIdeasFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedIdeasFilter()
+    {
+        if ($this->ideas_filter === 'my_ideas') {
+            if (!auth()->check())
+            {
+                return redirect(route('login'));
+            }
+        }
+    }
+
     public function queryStringUpdatedStatus($newStatus)
     {
         $this->status = $newStatus;
@@ -48,16 +67,21 @@ class IdeasIndex extends Component
 
         return view('livewire.ideas-index',[
             'ideas' => Idea::with('user','category','status')
+                ->addSelect(['voted_by_user' => Vote::select('id')
+                    ->where('user_id',auth()->id())
+                    ->whereColumn('idea_id','ideas.id')
+                ])
                 ->when($this->status && $this->status != 'All',function ($query) use ($statuses){
                     return $query->where('status_id', $statuses->get($this->status));
                 })
                 ->when($this->category && $this->category != 'all_categories',function ($query) use ($categories){
                     return $query->where('category_id', $categories->pluck('id','name')->get($this->category));
                 })
-                ->addSelect(['voted_by_user' => Vote::select('id')
-                    ->where('user_id',auth()->id())
-                    ->whereColumn('idea_id','ideas.id')
-                ])
+                ->when($this->ideas_filter && $this->ideas_filter === 'top_voted', function ($query) {
+                    return $query->orderByDesc('votes_count');
+                })->when($this->ideas_filter && $this->ideas_filter === 'my_ideas', function ($query) {
+                    return $query->where('user_id', auth()->id());
+                })
                 ->withCount('votes')
                 ->orderBy('id','desc')
                 ->simplePaginate(Idea::PAGINATION_COUNT),
