@@ -76,4 +76,15 @@ class User extends Authenticatable
 
         return 'https://www.gravatar.com/avatar/'.md5($this->email).'?s=200'.'&d=s3.amazonaws.com/laracasts/images/forum/avatars/default-avatar-'.$integerToUse.'.png';
     }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return in_array($this->email,[
+                'admin@admin.com'
+            ]
+        );
+    }
 }
