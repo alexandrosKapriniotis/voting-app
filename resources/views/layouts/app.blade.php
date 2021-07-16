@@ -18,7 +18,7 @@
     </head>
     <body class="font-sans bg-gray-background text-gray-900 text-sm">
         <header class="flex items-center justify-between px-8 py-4">
-            <a href="#">
+            <a href="/">
                 <img src="https://assets.laracasts.com/images/logo.svg" alt="logo">
             </a>
             <div class="flex items-center mt-2 md:mt-0">
