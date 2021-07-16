@@ -3,12 +3,14 @@
 namespace Tests\Feature;
 
 use App\Http\Livewire\SetStatus;
+use App\Jobs\NotifyAllVoters;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -126,5 +128,41 @@ class AdminSetStatusTest extends TestCase
             'id'        => $ideaOne->id,
             'status_id' => $statusOpen->id
         ]);
+    }
+
+    /** @test */
+    public function can_set_status_correctly_while_notifying_all_voters()
+    {
+        $user = User::factory()->create([
+            'name'  => 'Alexander',
+            'email' => 'admin@admin.com'
+        ]);
+
+        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+        $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
+
+        $statusOpen = Status::factory()->create(['name' => 'Open']);
+        $statusConsidering = Status::factory()->create(['name' => 'Considering']);
+
+        $ideaOne = Idea::factory()->create([
+            'user_id' => $user->id,
+            'category_id' => $categoryOne->id,
+            'status_id' => $statusConsidering->id,
+            'title' => 'My First Idea',
+            'description' => 'Description for my first idea',
+        ]);
+
+        Queue::fake();
+
+        Queue::assertNothingPushed();
+
+        Livewire::actingAs($user)
+            ->test(SetStatus::class,['idea' => $ideaOne])
+            ->set('status',$statusOpen->id)
+            ->set('notifyAllVoters',true)
+            ->call('setStatus')
+            ->assertEmitted('statusWasUpdated');
+
+        Queue::assertPushed(NotifyAllVoters::class);
     }
 }
