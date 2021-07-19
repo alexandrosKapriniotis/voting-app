@@ -21,78 +21,38 @@ class AdminSetStatusTest extends TestCase
     /** @test */
     public function show_page_contains_set_status_livewire_component_when_user_is_admin()
     {
-        $user = User::factory()->create([
-            'name'  => 'Alexander',
-            'email' => 'admin@admin.com'
-        ]);
-
-        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
-        $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
-
-        $statusOpen = Status::factory()->create(['name' => 'Open']);
-
-        $ideaOne = Idea::factory()->create([
-            'user_id' => $user->id,
-            'category_id' => $categoryOne->id,
-            'status_id' => $statusOpen->id,
-            'title' => 'My First Idea',
-            'description' => 'Description for my first idea',
-        ]);
+        $user = User::factory()->admin()->create();
+        $idea = Idea::factory()->create();
 
         $this->actingAs($user)
-              ->get(route('idea.show',$ideaOne))
+              ->get(route('idea.show',$idea))
               ->assertSeeLivewire('set-status');
     }
 
     /** @test */
     public function show_page_contains_set_status_livewire_component_when_user_is_not_admin()
     {
-        $user = User::factory()->create([
-            'name'  => 'Alexander',
-            'email' => 'user@user.com'
-        ]);
+        $userNotAdmin = User::factory()->create();
+        $idea = Idea::factory()->create();
 
-        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
-        $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
-
-        $statusOpen = Status::factory()->create(['name' => 'Open']);
-
-        $ideaOne = Idea::factory()->create([
-            'user_id' => $user->id,
-            'category_id' => $categoryOne->id,
-            'status_id' => $statusOpen->id,
-            'title' => 'My First Idea',
-            'description' => 'Description for my first idea',
-        ]);
-
-        $this->actingAs($user)
-            ->get(route('idea.show',$ideaOne))
+        $this->actingAs($userNotAdmin)
+            ->get(route('idea.show',$idea))
             ->assertDontSeeLivewire('set-status');
     }
 
     /** @test */
     public function initial_status_is_set_correctly()
     {
-        $user = User::factory()->create([
-            'name'  => 'Alexander',
-            'email' => 'admin@admin.com'
-        ]);
-
-        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
-        $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
+        $user = User::factory()->admin()->create();
 
         $statusConsidering = Status::factory()->create(['name' => 'Considering']);
 
-        $ideaOne = Idea::factory()->create([
-            'user_id' => $user->id,
-            'category_id' => $categoryOne->id,
+        $idea = Idea::factory()->create([
             'status_id' => $statusConsidering->id,
-            'title' => 'My First Idea',
-            'description' => 'Description for my first idea',
         ]);
 
         Livewire::actingAs($user)
-            ->test(SetStatus::class,['idea' => $ideaOne])
+            ->test(SetStatus::class,['idea' => $idea])
             ->assertSet('status', $statusConsidering->id);
     }
 
@@ -133,23 +93,13 @@ class AdminSetStatusTest extends TestCase
     /** @test */
     public function can_set_status_correctly_while_notifying_all_voters()
     {
-        $user = User::factory()->create([
-            'name'  => 'Alexander',
-            'email' => 'admin@admin.com'
-        ]);
+        $user = User::factory()->admin()->create();
 
-        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
-        $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
-
-        $statusOpen = Status::factory()->create(['name' => 'Open']);
-        $statusConsidering = Status::factory()->create(['name' => 'Considering']);
+        $statusConsidering = Status::factory()->create(['id' => 2, 'name' => 'Considering']);
+        $statusInProgress = Status::factory()->create(['id' => 3, 'name' => 'In Progress']);
 
         $ideaOne = Idea::factory()->create([
-            'user_id' => $user->id,
-            'category_id' => $categoryOne->id,
             'status_id' => $statusConsidering->id,
-            'title' => 'My First Idea',
-            'description' => 'Description for my first idea',
         ]);
 
         Queue::fake();
@@ -158,7 +108,7 @@ class AdminSetStatusTest extends TestCase
 
         Livewire::actingAs($user)
             ->test(SetStatus::class,['idea' => $ideaOne])
-            ->set('status',$statusOpen->id)
+            ->set('status',$statusInProgress->id)
             ->set('notifyAllVoters',true)
             ->call('setStatus')
             ->assertEmitted('statusWasUpdated');
