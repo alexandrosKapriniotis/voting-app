@@ -53,7 +53,13 @@
                                         md:ml-8 top-8 md:top-6 right-0 md:left-0 z-10"
                             >
                                 <li>
-                                    <a href="#" class="block transition duration-150 ease-in hover:bg-gray-100 px-5 py-3">
+                                    <a
+                                        href="#"
+                                        @click.prevent="
+                                            isOpen : false
+                                            $dispatch('showeditmodal')
+                                        "
+                                        class="block transition duration-150 ease-in hover:bg-gray-100 px-5 py-3">
                                         Edit Idea
                                     </a>
                                 </li>

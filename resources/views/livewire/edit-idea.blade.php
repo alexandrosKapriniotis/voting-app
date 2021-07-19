@@ -1,16 +1,15 @@
-<div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div
+    x-cloak
+    x-data="{ isOpen : false }"
+    x-show="isOpen"
+    @click.outside="isOpen = false"
+    @keydown.escape.window="isOpen = false"
+    @showeditmodal.window="isOpen = true"
+    class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="flex items-end justify-center min-h-screen">
-        <!--
-          Background overlay, show/hide based on modal state.
-
-          Entering: "ease-out duration-300"
-            From: "opacity-0"
-            To: "opacity-100"
-          Leaving: "ease-in duration-200"
-            From: "opacity-100"
-            To: "opacity-0"
-        -->
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <div
+            x-show.transition.opacity="isOpen"
+            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -25,10 +24,15 @@
             From: "opacity-100 translate-y-0 sm:scale-100"
             To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         -->
-        <div class="modal inline-block align-bottom bg-white rounded-tl-xl rounded-tr-xl overflow-hidden transform transition-all sm:max-w-lg sm:w-full py-2 px-4">
+        <div
+            x-show.transition.origin.bottom.duration.300ms="isOpen"
+            class="modal inline-block align-bottom bg-white rounded-tl-xl rounded-tr-xl overflow-hidden
+                transform transition-all sm:max-w-lg sm:w-full py-2 px-4">
 
             <div class="absolute top-0 right-0 pt-2 pr-4">
-                <button class="text-gray-400 hover:text-gray-500">
+                <button
+                    @click="isOpen = false"
+                    class="text-gray-400 hover:text-gray-500">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
