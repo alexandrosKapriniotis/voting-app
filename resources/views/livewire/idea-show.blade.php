@@ -20,7 +20,7 @@
                     <div class="flex text-gray-400 md:items-center text-xs font-semibold md:space-x-2">
                         <div class="hidden md:block font-bold text-gray-900">{{ $idea->user->name }}</div>
                         <div class="hidden md:block">&bull;</div>
-                        <div>10 hours ago</div>
+                        <div>{{ $idea->created_at->diffForHumans() }}</div>
                         <div class="hidden md:block">&bull;</div>
                         <div>{{ $idea->category->name }}</div>
                         <div class="hidden md:block">&bull;</div>
@@ -52,6 +52,7 @@
                                 class="ml-8 absolute w-44 text-left font-semibold bg-white shadow-dialog rounded-xl py-3
                                         md:ml-8 top-8 md:top-6 right-0 md:left-0 z-10"
                             >
+                                @can('update', $idea)
                                 <li>
                                     <a
                                         href="#"
@@ -63,6 +64,7 @@
                                         Edit Idea
                                     </a>
                                 </li>
+                                @endcan
                                 <li>
                                     <a href="#" class="block transition duration-150 ease-in hover:bg-gray-100 px-5 py-3">
                                         Delete Idea

@@ -12,7 +12,8 @@ class IdeaShow extends Component
     public $hasVoted;
 
     protected $listeners = [
-        'statusWasUpdated'
+        'statusWasUpdated' => '$refresh',
+        'ideaWasUpdated' => '$refresh',
     ];
 
     public function mount(Idea $idea, $votesCount)
