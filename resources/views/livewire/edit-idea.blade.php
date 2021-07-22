@@ -2,37 +2,31 @@
     x-cloak
     x-data="{ isOpen : false }"
     x-show="isOpen"
-{{--    @click.outside="isOpen = false"--}}
     @keydown.escape.window="isOpen = false"
     x-init="
         window.livewire.on('ideaWasUpdated',() => {
             isOpen = false
         })
     "
-    @showeditmodal.window="isOpen = true"
-    class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen">
+    @showeditmodal.window="
+        isOpen = true
+        $nextTick( () => $refs.title.focus())
+    "
+    class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
+    >
+    <div
+        x-show.transition.opacity="isOpen"
+        class="flex items-end justify-center min-h-screen">
         <div
-            x-show.transition.opacity="isOpen"
             class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
-        <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-        <!--
-          Modal panel, show/hide based on modal state.
-
-          Entering: "ease-out duration-300"
-            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            To: "opacity-100 translate-y-0 sm:scale-100"
-          Leaving: "ease-in duration-200"
-            From: "opacity-100 translate-y-0 sm:scale-100"
-            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        -->
         <div
             x-show.transition.origin.bottom.duration.300ms="isOpen"
             class="modal inline-block align-bottom bg-white rounded-tl-xl rounded-tr-xl overflow-hidden
-                transform transition-all sm:max-w-lg sm:w-full py-2 px-4">
+                transform transition-all sm:max-w-lg sm:w-full py-2 px-4"
+        >
 
             <div class="absolute top-0 right-0 pt-2 pr-4">
                 <button
@@ -54,7 +48,11 @@
 
             <form wire:submit.prevent="updateIdea" method="POST" class="space-y-4 px-4 py-6">
                 <div>
-                    <input wire:model.defer="title" type="text" class="text-sm w-full bg-gray-100 border-none rounded-xl placeholder-gray-900 px-4 py-2" required placeholder="Your Idea" />
+                    <input
+                        wire:model.defer="title"
+                        x-ref="title"
+                        type="text"
+                        class="text-sm w-full bg-gray-100 border-none rounded-xl placeholder-gray-900 px-4 py-2" required placeholder="Your Idea" />
                     @error('title')
                     <p class="text-red text-xs mt-1">
                         {{ $message }}
@@ -105,7 +103,6 @@
                         </span>
                     </button>
                 </div>
-
 
             </form>
 

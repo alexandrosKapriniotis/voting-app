@@ -65,11 +65,19 @@
                                     </a>
                                 </li>
                                 @endcan
+
+                                @can('delete', $idea)
                                 <li>
-                                    <a href="#" class="block transition duration-150 ease-in hover:bg-gray-100 px-5 py-3">
+                                    <a href="#"
+                                       @click.prevent="
+                                            isOpen : false
+                                            $dispatch('open-delete-modal')
+                                        "
+                                       class="block transition duration-150 ease-in hover:bg-gray-100 px-5 py-3">
                                         Delete Idea
                                     </a>
                                 </li>
+                                @endcan
                                 <li>
                                     <a href="#" class="block transition duration-150 ease-in hover:bg-gray-100 px-5 py-3">
                                         Mark as Spam
