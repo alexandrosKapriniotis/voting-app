@@ -15,7 +15,7 @@ class MarkIdeaAsNotSpam extends Component
         $this->idea = $idea;
     }
 
-    public function markIdeaAsNotSpam(Idea $idea)
+    public function markAsNotSpam(Idea $idea)
     {
         if (auth()->guest() || ! auth()->user()->isAdmin()){
             abort(Response::HTTP_FORBIDDEN);

@@ -71,7 +71,7 @@ class SpamManagementTest extends TestCase
             ->test(MarkIdeaAsNotSpam::class,[
                 'idea' => $idea
             ])
-            ->call('markIdeaAsNotSpam')
+            ->call('markAsNotSpam')
             ->assertEmitted('ideaWasMarkedAsNotSpam');
 
         $this->assertEquals(0,Idea::first()->spam_reports);
