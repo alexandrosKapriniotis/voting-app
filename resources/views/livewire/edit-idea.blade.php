@@ -4,7 +4,7 @@
     x-show="isOpen"
     @keydown.escape.window="isOpen = false"
     x-init="
-        window.livewire.on('ideaWasUpdated',() => {
+        Livewire.on('ideaWasUpdated',() => {
             isOpen = false
         })
     "
