@@ -11,7 +11,7 @@ class Comment extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $perPage = 10;
+    protected $perPage = 20;
 
     /**
      * @return BelongsTo
