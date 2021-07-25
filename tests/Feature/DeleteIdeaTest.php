@@ -128,7 +128,6 @@ class DeleteIdeaTest extends TestCase
             ->test(IdeaShow::class, [
                 'idea' => $idea,
                 'votesCount' => 4,
-                'commentsCount' => $idea->comments->count(),
             ])
             ->assertSee('Delete Idea');
     }
@@ -143,7 +142,6 @@ class DeleteIdeaTest extends TestCase
             ->test(IdeaShow::class, [
                 'idea' => $idea,
                 'votesCount' => 4,
-                'commentsCount' => $idea->comments->count(),
             ])
             ->assertDontSee('Delete Idea');
     }

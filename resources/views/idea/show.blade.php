@@ -11,7 +11,6 @@
     <livewire:idea-show
         :idea="$idea"
         :votesCount="$votesCount"
-        :commentsCount="$commentsCount"
     />
 
     <livewire:idea-comments :idea="$idea" />

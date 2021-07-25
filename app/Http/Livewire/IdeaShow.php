@@ -9,7 +9,6 @@ class IdeaShow extends Component
 {
     public $idea;
     public $votesCount;
-    public $commentsCount;
     public $hasVoted;
 
     protected $listeners = [
@@ -20,11 +19,10 @@ class IdeaShow extends Component
         'commentWasAdded' => '$refresh',
     ];
 
-    public function mount(Idea $idea, $votesCount, $commentsCount)
+    public function mount(Idea $idea, $votesCount)
     {
         $this->idea = $idea;
         $this->votesCount = $votesCount;
-        $this->commentsCount = $commentsCount;
         $this->hasVoted = $idea->isVotedByUser(auth()->user());
     }
 

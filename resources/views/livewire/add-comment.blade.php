@@ -7,6 +7,13 @@
         })
 
         Livewire.hook('message.processed', (message, component) => {
+
+            if (['goToPage','previousPage','nextPage'].includes(message.updateQueue[0].method))
+            {
+                const firstChild = document.querySelector('.comment-container:first-child');
+                firstChild.scrollIntoView({ behavior: 'smooth'})
+            }
+
             if (message.updateQueue[0].payload.event === 'commentWasAdded'
                 && message.component.fingerprint.name === 'idea-comments')
             {
