@@ -50,7 +50,7 @@
                               class="resize-none border-none w-full bg-gray-100 rounded-xl placeholder-gray-900 text-sm px-4 py-2"
                               placeholder="Describe your comment">
                     </textarea>
-                    @error('description')
+                    @error('body')
                     <p class="text-red text-xs mt-1">
                         {{ $message }}
                     </p>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\comments;
+namespace Tests\Feature\Comments;
 
 use App\Http\Livewire\AddComment;
 use App\Models\Comment;
