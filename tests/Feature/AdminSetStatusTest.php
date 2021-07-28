@@ -115,4 +115,83 @@ class AdminSetStatusTest extends TestCase
 
         Queue::assertPushed(NotifyAllVoters::class);
     }
+
+    /** @test */
+    public function can_set_status_correctly_no_coment()
+    {
+        $user = User::factory()->create([
+            'name'  => 'Alexander',
+            'email' => 'admin@admin.com'
+        ]);
+
+        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+        $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
+
+        $statusOpen = Status::factory()->create(['name' => 'Open']);
+        $statusConsidering = Status::factory()->create(['name' => 'Considering']);
+
+        $ideaOne = Idea::factory()->create([
+            'user_id' => $user->id,
+            'category_id' => $categoryOne->id,
+            'status_id' => $statusConsidering->id,
+            'title' => 'My First Idea',
+            'description' => 'Description for my first idea',
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(SetStatus::class,['idea' => $ideaOne])
+            ->set('status',$statusOpen->id)
+            ->call('setStatus')
+            ->assertEmitted('statusWasUpdated');
+
+        $this->assertDatabaseHas('ideas',[
+            'id'        => $ideaOne->id,
+            'status_id' => $statusOpen->id
+        ]);
+
+        $this->assertDatabaseHas('comments',[
+            'body'        => 'No comment was added',
+            'is_status_update' => true
+        ]);
+    }
+
+    /** @test */
+    public function can_set_status_correctly_with_coment()
+    {
+        $user = User::factory()->create([
+            'name'  => 'Alexander',
+            'email' => 'admin@admin.com'
+        ]);
+
+        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+        $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
+
+        $statusOpen = Status::factory()->create(['name' => 'Open']);
+        $statusConsidering = Status::factory()->create(['name' => 'Considering']);
+
+        $ideaOne = Idea::factory()->create([
+            'user_id' => $user->id,
+            'category_id' => $categoryOne->id,
+            'status_id' => $statusConsidering->id,
+            'title' => 'My First Idea',
+            'description' => 'Description for my first idea',
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(SetStatus::class,['idea' => $ideaOne])
+            ->set('status',$statusOpen->id)
+            ->set('comment','this is my comment')
+            ->call('setStatus')
+            ->assertEmitted('statusWasUpdated');
+
+        $this->assertDatabaseHas('ideas',[
+            'id'        => $ideaOne->id,
+            'status_id' => $statusOpen->id
+        ]);
+
+        $this->assertDatabaseHas('comments',[
+            'body'        => 'this is my comment',
+            'is_status_update' => true
+        ]);
+    }
 }

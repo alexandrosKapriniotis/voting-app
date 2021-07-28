@@ -42,7 +42,7 @@
 
                 @auth
                 <div
-                    class="flex items-center space-x-2"
+                    class="flex items-center space-x-2 text-gray-900"
                     x-data="{ isOpen: false }"
                 >
                     <div class="relative">
@@ -69,7 +69,7 @@
                                         isOpen = false
                                         Livewire.emit('setEditComment', {{ $comment->id }})
                                         "
-                                        class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3"
+                                        class="hover:bg-gray-100 text-black block transition duration-150 ease-in px-5 py-3"
                                     >
                                         Edit Comment
                                     </a>
@@ -83,7 +83,7 @@
                                             isOpen = false
                                             Livewire.emit('setDeleteComment', {{ $comment->id }})
                                             "
-                                        class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3"
+                                        class="hover:bg-gray-100 block text-black transition duration-150 ease-in px-5 py-3"
                                     >
                                         Delete Comment
                                     </a>
@@ -96,7 +96,7 @@
                                     isOpen = false
                                     Livewire.emit('setMarkAsSpamComment', {{ $comment->id }})
                                     "
-                                    class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3"
+                                    class="hover:bg-gray-100 block text-black transition duration-150 ease-in px-5 py-3"
                                 >
                                     Mark as Spam
                                 </a>
@@ -109,7 +109,7 @@
                                             isOpen : false
                                             Livewire.emit('setMarkAsNotSpamComment', {{ $comment->id }})
                                         "
-                                       class="block transition duration-150 ease-in hover:bg-gray-100 px-5 py-3">
+                                       class="block transition text-black duration-150 ease-in hover:bg-gray-100 px-5 py-3">
                                         Not Spam
                                     </a>
                                 </li>

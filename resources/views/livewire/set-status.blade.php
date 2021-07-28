@@ -57,9 +57,9 @@
                 </div>
             </div>
 
-            <textarea name="update_comment" id="update_comment" cols="30" rows="3" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border-none px-4 py-2"
+            <textarea wire:model="comment" name="update_comment" id="update_comment" cols="30" rows="3" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border-none px-4 py-2"
                       placeholder="Add an update comment (optional)">
-                        </textarea>
+            </textarea>
 
             <div class="flex items-center justify-between md:space-x-3">
                 <button type="button" class="flex items-center justify-center w-1/2 h-11 text-xs bg-gray-200
@@ -68,8 +68,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                     </svg>
                     <span class="ml-2">
-                                    Attach
-                                </span>
+                        Attach
+                    </span>
                 </button>
 
                 <button type="submit" class="flex items-center justify-center w-1/2 h-11 text-xs bg-blue
