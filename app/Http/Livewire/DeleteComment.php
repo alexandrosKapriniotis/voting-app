@@ -8,13 +8,13 @@ use Livewire\Component;
 
 class DeleteComment extends Component
 {
-    public Comment $comment;
+    public ?Comment $comment;
 
     protected $listeners = ['setDeleteComment'];
 
     public function setDeleteComment($commentId)
     {
-        $this->comment = Comment::find($commentId);
+        $this->comment = Comment::findOrFail($commentId);
 
         $this->emit('deleteCommentWasSet');
     }
@@ -26,6 +26,8 @@ class DeleteComment extends Component
         }
 
         Comment::destroy($this->comment->id);
+        
+        $this->comment = null;
 
         $this->emit('commentWasDeleted');
         $this->emit('notificationSuccessOpen','Comment was deleted!');

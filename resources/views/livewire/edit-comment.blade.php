@@ -48,7 +48,7 @@
                 <div>
                     <textarea x-ref="editComment" wire:model.defer="body" name="comment" id="comment" cols="30" rows="4" required
                               class="resize-none border-none w-full bg-gray-100 rounded-xl placeholder-gray-900 text-sm px-4 py-2"
-                              placeholder="Describe your comment">
+                              placeholder="Your comment here">
                     </textarea>
                     @error('body')
                     <p class="text-red text-xs mt-1">

@@ -19,6 +19,9 @@
                 @admin
                     <option value="spam_ideas">Spam Ideas</option>
                 @endadmin
+                @admin
+                <option value="spam_comments">Spam Comments</option>
+                @endadmin
             </select>
         </div>
 
