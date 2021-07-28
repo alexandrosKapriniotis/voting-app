@@ -27,8 +27,7 @@ class VoteShowPageTest extends TestCase
         $categoryOne = Category::factory()->create(['name' => 'Category 1']);
 
         $statusOpen = Status::factory()->create([
-            'name'      => 'Open',
-            'classes'   => 'bg-gray-200',
+            'name'      => 'Open'
         ]);
 
         $idea = Idea::factory()->create([
@@ -55,7 +54,6 @@ class VoteShowPageTest extends TestCase
 
         $statusOpen = Status::factory()->create([
             'name'      => 'Open',
-            'classes'   => 'bg-gray-200',
         ]);
 
         $idea = Idea::factory()->create([
@@ -90,8 +88,7 @@ class VoteShowPageTest extends TestCase
         $categoryOne = Category::factory()->create(['name' => 'Category 1']);
 
         $statusOpen = Status::factory()->create([
-            'name'      => 'Open',
-            'classes'   => 'bg-gray-200',
+            'name'      => 'Open'
         ]);
 
         $idea = Idea::factory()->create([
@@ -120,8 +117,7 @@ class VoteShowPageTest extends TestCase
         $categoryOne = Category::factory()->create(['name' => 'Category 1']);
 
         $statusOpen = Status::factory()->create([
-            'name'      => 'Open',
-            'classes'   => 'bg-gray-200',
+            'name'      => 'Open'
         ]);
 
         $idea = Idea::factory()->create([
@@ -155,8 +151,7 @@ class VoteShowPageTest extends TestCase
         $categoryOne = Category::factory()->create(['name' => 'Category 1']);
 
         $statusOpen = Status::factory()->create([
-            'name'      => 'Open',
-            'classes'   => 'bg-gray-200',
+            'name'      => 'Open'
         ]);
 
         $idea = Idea::factory()->create([
@@ -185,8 +180,7 @@ class VoteShowPageTest extends TestCase
         $categoryOne = Category::factory()->create(['name' => 'Category 1']);
 
         $statusOpen = Status::factory()->create([
-            'name'      => 'Open',
-            'classes'   => 'bg-gray-200',
+            'name'      => 'Open'
         ]);
 
         $idea = Idea::factory()->create([
