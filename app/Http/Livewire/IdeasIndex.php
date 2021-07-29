@@ -2,17 +2,20 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Traits\WithAuthRedirects;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
 use App\Models\Vote;
 use App\QueryFilters\ideasFilter;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pipeline\Pipeline;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class IdeasIndex extends Component
 {
+    use WithAuthRedirects;
     use WithPagination;
 
     public $status = 'All';
@@ -50,12 +53,15 @@ class IdeasIndex extends Component
         $this->resetPage();
     }
 
+    /**
+     * @return RedirectResponse
+     */
     public function updatedIdeasFilter()
     {
         if ($this->ideas_filter === 'my_ideas') {
-            if (!auth()->check())
+            if (auth()->guest())
             {
-                return redirect(route('login'));
+                return $this->redirectToLogin();
             }
         }
     }

@@ -1,4 +1,6 @@
-<form wire:submit.prevent="createIdea" method="POST" class="space-y-4 px-4 py-6">
+<div>
+    @auth
+        <form wire:submit.prevent="createIdea" method="POST" class="space-y-4 px-4 py-6">
     <div>
         <input wire:model.defer="title" type="text" class="text-sm w-full bg-gray-100 border-none rounded-xl placeholder-gray-900 px-4 py-2" required placeholder="Your Idea" />
         @error('title')
@@ -68,3 +70,21 @@
         @endif
     </div>
 </form>
+    @else
+        <div class="my-6 text-center">
+            <a
+                wire:click.prevent="redirectToLogin"
+                href="{{ route('login') }}" class="inline-block w-1/2 h-11 text-xs bg-blue
+                                font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3 text-white">
+                Login
+            </a>
+
+            <a
+                wire:click.prevent="redirectToRegister"
+                href="{{ route('register') }}" class="inline-block mt-1 w-1/2 h-11 text-xs bg-gray-200
+                                font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in px-6 py-3">
+                Sign up
+            </a>
+        </div>
+    @endauth
+</div>
