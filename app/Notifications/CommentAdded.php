@@ -32,7 +32,7 @@ class CommentAdded extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database'];
+        return ['database'];
     }
 
     /**
@@ -63,9 +63,9 @@ class CommentAdded extends Notification
             'comment_body'  => $this->comment->body,
             'user_avatar'   => $this->comment->user->getAvatar(),
             'user_name'     => $this->comment->user->name,
-            'idea_id'     => $this->comment->idea->slug,
+            'idea_id'       => $this->comment->idea->id,
             'idea_slug'     => $this->comment->idea->slug,
-            'idea_title'     => $this->comment->idea->title,
+            'idea_title'    => $this->comment->idea->title,
         ];
     }
 }
