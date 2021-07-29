@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class CommentNotifications extends Component
 {
-    const NOTIFICATION_THRESHOLD = 3;
+    const NOTIFICATION_THRESHOLD = 20;
 
     public $notifications;
     public $notificationCount;

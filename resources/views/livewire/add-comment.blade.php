@@ -28,7 +28,7 @@
         })
 
         @if(session('scrollToComment'))
-        const commentToScrollTo = document.querySelector('#comment-{{session('scrollToComment')}}');
+        const commentToScrollTo = document.querySelector('#comment-{{ session('scrollToComment') }}');
         commentToScrollTo.scrollIntoView({ behavior: 'smooth'})
         commentToScrollTo.classList.add('bg-green-50')
 
