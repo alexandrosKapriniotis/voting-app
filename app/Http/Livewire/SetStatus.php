@@ -27,6 +27,14 @@ class SetStatus extends Component
             abort(Response::HTTP_FORBIDDEN);
         }
 
+        if ($this->idea->status_id === (int)$this->status)
+        {
+            $this->emit('statusWasUpdatedError');
+            $this->emit('notificationErrorOpen','Status is the same!');
+
+            return;
+        }
+
         $this->idea->status_id = $this->status;
         $this->idea->save();
 
